@@ -14,8 +14,8 @@ pipeline {
             withCredentials([string(credentialsId: 'DOCKER_HUB_PASSWORD_', variable: 'DOCKER_HUB_PASSWORD')]) {
                 
                 sh 'docker login -u thib432 -p $DOCKER_HUB_PASSWORD'
-                sh 'docker build -t thib432/devops-mywebsite:v1 .'
-                sh 'docker push thib432/devops-mywebsite:v1'
+                sh 'docker build -t thib432/Happy:v1 .'
+                sh 'docker push thib432/Happy:v1'
             }
         }
     }
@@ -24,7 +24,7 @@ pipeline {
         withKubeConfig([credentialsId: 'KuberneteThib']) {
             script {
                 
-                sh "sed -i \"s#replace#thib432/devops-mywebsite:v1#g\" k8s_deployment_service.yaml"
+                sh "sed -i \"s#replace#thib432/Happy:v1#g\" k8s_deployment_service.yaml"
                 sh 'kubectl apply -f k8s_deployment_service.yaml'
             }
         }
